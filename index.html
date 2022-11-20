@@ -1,0 +1,389 @@
+<!--
+//NAMA  : MUHAMMAD RIZKY PRAYOGA
+//NIM   : 201401024
+//LAB   : PC1
+//TUGAS : 1 (MENAMBAHKAN BUTTON BARU TUGAS 1(LINE 309))
+!-->
+
+<!DOCTYPE HTML>
+
+<html>
+<head>
+	<title>UTS PC1 201401024</title>
+    <link rel="icon" type="image/x-icon" href="icon.png">
+</head>
+<main class="container">
+  <div class="card">
+    <br>
+    <img src="foto.jpg" alt="User image" class="card__image" />
+    <div class="card__text">
+        <br>
+      <h2>Muhammad Rizky Prayoga</h2>
+      <p><b>| LAB PC1 | NIM : 201401024 |</b>
+    </div>
+    <br>
+  </div><br>
+      <div class="card">
+        <center>
+        <div class="card__text">
+            <h3>UTS LABORATORIUM PC1</h3>
+        </div>
+        <canvas id='canvas1' style='display:block;margin:10px;width:265px;height:265px;border-radius: 10px'></canvas>
+        </center><br>
+        <div class="card__action">
+          <button class="card__action__button card__action--follow" id='read'>Read Image</button>&nbsp;&nbsp;
+          <button class="card__action__button card__action--message" id='ori'>ORIGINAL IMAGE</button>
+        </div><br>
+        <div class="card__action">
+          <button class="card__action__button card__action--follow" id='rgb3color' style="background: #d997d6"> 3 COLOR</button>&nbsp;&nbsp;
+          <button class="card__action__button card__action--message" id='rgb4color' style="background: #e69e19">4 COLOR</button>
+        </div>
+    </div>
+</main>
+<head>
+	<title>Modul 1</title>
+</head>
+<body>
+<center>
+	<!-- MODUL 1 -->
+	<h1>CANVAS</h1>
+	<div class="row">
+		<div class="column">
+			<canvas id='canvas1' style='display:block;margin:10px'></canvas>
+			<canvas id='canvas2' style='display:block;margin:10px'></canvas>
+		</div>
+		<div class="column">
+			<h2>Modul 1</h2>
+			<button id='read'>READ IMAGE</button>
+			<button id='ori'>ORIGINAL IMAGE</button><br><br>
+			<select id='histval'><br>
+				<option value='0'>Red</option>
+				<option value='1'>Green</option>
+				<option value='2'>Blue</option>
+			</select>
+			<button id='hist1'>Histogram</button><br><br>
+			R <input type='range' min='-255' max='255' data-id='1' id='ch1'><input type='text' id='chv1' size='3' disabled value='0'><br>
+			G <input type='range' min='-255' max='255' data-id='2' id='ch2'><input type='text' id='chv2' size='3' disabled value='0'><br>
+			B <input type='range' min='-255' max='255' data-id='3' id='ch3'><input type='text' id='chv3' size='3' disabled value='0'><br>
+			A <input type='range' min='0' max='255' data-id='4' id='ch4' value='255'><input type='text' id='chv4' size='3' disabled value='255'><br><br>
+			<button id='default'>Default RGBA</button>
+			<button id='randomize'>Randomize RGBA</button>
+		</div>
+		<div class="column">
+			<h2>Modul 2</h2>
+			Brightness <input type='range' min='-255' max='255' data-id='4' id='brightness' value='0'><input type='text' id='brightness_val' size='3' disabled value='0'><br>
+			Threshold <input type='range' min='0' max='255' id='threshold' value='0'><input type='text' id='threshold_val' size='3' disabled value='0'><br>
+			<br>
+			<button id='negative'>Negative Image</button>
+			<button id='grayscale'>Grayscale Image</button><br><br>
+            <button id='Tugas1'>Tugas 1</button> <!--MENAMBAHKAN BUTTON TUGAS 1 untuk merubah warna rgba berdasarkan nilai grayscale!-->
+            <button id='n_grayscale'>NILAI GRAYSCALE </button>
+		</div>
+	</div>
+</center>
+</body>
+
+<style type="text/css">
+html {
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+:root {
+  --small-green-circle: #78eea6;
+  --main-accent-color: #9b45e4;
+  --secondary-accent-color: #e13a9d;
+}
+
+a {
+  background-color: transparent;
+}
+
+img {
+  border-style: none;
+}
+
+button {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  overflow: visible;
+  -webkit-appearance: button;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  background: #2B65EC;
+  background: -webkit-linear-gradient(to right, #e6b2c6, #d6e5fa);
+  background: linear-gradient(to right, #4ba9c8, #d6e5fa);
+  font-family: "Lato", sans-serif;
+  font-weight: normal;
+  background-repeat: no-repeat;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.card {
+  padding: 1em;
+  border-radius: 0.8em;
+  background-color: #fefefe;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042), 0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07);
+  position: relative;
+}
+
+.card:after {
+
+}
+
+.card__image {
+  width: 300px;
+  border-radius: 50%;
+}
+
+.card__info {
+  margin: 1em 0;
+  list-style-type: none;
+  padding: 0;
+}
+
+.card__info li {
+  display: inline-block;
+  text-align: center;
+  padding: 0.5em;
+}
+
+.card__info__stats {
+  color: var(--main-accent-color);
+  font-weight: bold;
+  font-size: 1.2em;
+  display: block;
+}
+
+.card__info__stats + span {
+  color: #969798;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.card__text h2 {
+  margin-bottom: 0.3em;
+  font-size: 1.4em;
+  color: #6f6f6f;
+}
+    
+.card__text h3 {
+  margin-bottom: 0.3em;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: dimgrey;
+}
+
+.card__text p {
+  margin: 0;
+  color: #999;
+  font-size: 0.95em;
+}
+
+.card__action {
+  justify-content: center;
+  display: flex;
+}
+
+.card__action__button {
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+  color:white;
+  border: none;
+  border-radius: 0.6em;
+  cursor: pointer;
+  position: relative;
+}
+
+.card__action__button:before {
+  content: "";
+  position: absolute;
+  border-radius: 0.5em;
+  transition: all 0.10s ease-in-out;
+}
+
+.card__action__button:hover:before {
+  top: -6px;
+  bottom: -6px;
+  left: -6px;
+  right: -6px;
+}
+
+.card__action--follow {
+  background-color: #4bc8c8;
+}
+
+.card__action__button:hover:before {
+  border: 2px solid #86dada;
+}
+
+.card__action--message {
+  background-color: #da8686;
+}
+
+.card__action--message:hover:before {
+  border: 2px solid #c84b4b;
+}
+
+@media (min-width: 425px) {
+  .card {
+    padding: 3em;
+  }
+
+  .card:after {
+    top: 50px;
+    right: 160px;
+  }
+
+  .card__info li {
+    padding: 1em;
+  }
+  .card__action__button {
+    padding: 0.3em 0.5em;
+  }
+}
+}
+</style>
+<script src='pc.js'></script>
+<script>
+
+// MODUL 1
+var canvas = document.getElementById('canvas1')
+var obj = new pc(canvas)
+obj.image2canvas("usu1.jpg")
+var tes = new Array()
+
+document.getElementById('read').addEventListener('click',function(){
+	tes = obj.image2read()
+})
+
+document.getElementById('ori').addEventListener('click',function(){
+	obj.image2original()
+})
+
+//NO 1 C
+document.getElementById('rgb4color').addEventListener('click',function(){
+//copy array to array without reference
+tesbackup = new Array();
+        for (var c = 0; c < tes.length; c++) {
+          temp = new Array();
+          for (var d = 0; d < 4; d++) {
+            temp.push(tes[c][d]);
+          }
+          tesbackup.push(temp);
+        }
+        x = obj.i2x(i); // mengambil nilai index ke dalam koordinat x
+        y = obj.i2y(i);
+
+        var wnow = obj.width;
+        var ynow = obj.height;
+        for (var i = 0; i < tesbackup.length; i++) {
+          x = obj.i2x(i); // mengambil nilai index ke dalam koordinat x
+          y = obj.i2y(i);
+          if (x < wnow / 2 && y < ynow / 2) {
+            tes[i][0] = tesbackup[i][0] + 255;
+          }
+
+          if (x < wnow / 2 && y > ynow / 2) {
+            tes[i][0] = tesbackup[i][0] + 255;
+            tes[i][1] = tesbackup[i][1] + 255;
+          }
+
+          if (x > wnow / 2 && y < ynow / 2) {
+            tes[i][1] = tesbackup[i][1] + 255;
+          }
+
+          if (x > wnow / 2 && y > ynow / 2) {
+            tes[i][2] = tesbackup[i][2] + 255;
+          }
+        }
+        obj.array2canvas(tes);
+})
+
+    
+//Nomor 1 B     
+document.getElementById('rgb3color').addEventListener('click',function(){
+//copy array to array without reference
+      tesbackup = new Array();
+      for (var c = 0; c < tes.length; c++) {
+        temp = new Array();
+        for (var d = 0; d < 4; d++) {
+          temp.push(tes[c][d]);
+        }
+        tesbackup.push(temp);
+      }
+      x = obj.i2x(i); // mengambil nilai index ke dalam koordinat x
+      y = obj.i2y(i);
+
+      var wnow = obj.width;
+      for (var i = 0; i < tesbackup.length; i++) {
+        x = obj.i2x(i); // mengambil nilai index ke dalam koordinat x
+        y = obj.i2y(i);
+        if (x < wnow / 4) {
+          tes[i][0] = tesbackup[i][0] + 255;
+        }
+
+        if (x > wnow / 4 && x < (wnow * 2) / 4) {
+          tes[i][1] = tesbackup[i][1] + 255;
+        }
+        if (x > (wnow * 2) / 4) {
+              filtersize = 5;
+              borderparam = (filtersize - 1) / 2;
+              meandoubleparam = filtersize * filtersize;
+
+              xstart = obj.i2x(i) - borderparam;
+              xend = obj.i2x(i) + borderparam;
+              ystart = obj.i2y(i) - borderparam;
+              yend = obj.i2y(i) + borderparam;
+              red = 255;
+              green = 255;
+              blue = 255;
+              for (var yc = ystart; yc <= yend; yc++) {
+                for (var xc = xstart; xc <= xend; xc++) {
+                  if (yc >= 0 && xc >= 0 && xc < obj.width && yc < obj.height) {
+                    red += tesbackup[obj.xy2i(xc, yc)][0];
+                    green += tesbackup[obj.xy2i(xc, yc)][1];
+                    blue += tesbackup[obj.xy2i(xc, yc)][2];
+                    meandoubleparam++;
+                  }
+                }
+              }
+              tes[i][0] = Math.floor(red / meandoubleparam);
+              tes[i][1] = Math.floor(green / meandoubleparam);
+              tes[i][2] = Math.floor(blue / meandoubleparam);
+            }
+          }
+          obj.array2canvas(tes);
+        });
+
+
+</script>
